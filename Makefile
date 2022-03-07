@@ -1,0 +1,13 @@
+VERSION = 0
+PATCHLEVEL = 0
+SUBLEVEL = 1
+NAME = Fluorine
+
+ENGINEVERSION = $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(SUBLEVEL)))
+
+export VERSION PATCHLEVEL SUBLEVEL ENGINEVERSION
+
+.PHONY: all release clean engineversion
+
+engineversion:
+	@echo $(ENGINEVERSION)
