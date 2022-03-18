@@ -48,13 +48,22 @@ mmc="/sys/module/mmc_core/parameters/"
 blkio="/dev/blkio/"
 net="/proc/sys/net/"
 
+__print_help()
+{
+cat <<EOF
+FluorineEngine (c) 2022
+Usage:
+		-h, --help				print help menu and exit
+EOF
+}
+
 printmsg()
 {
 	case $1 in
 		"-n") echo "[*] $2" ;;
-		"-w") echo "[!] $2" ;;
-		"--custom-msg") echo "[$2] $3" ;;
-		"--log") echo "[ $(date +"%X") ]: $2" >> $logpath ;;
+		"-w"|"--warn") echo "[!] $2" ;;
+		"--custom-msg"|"-cm") echo "[$2] $3" ;;
+		"--log"|"-l") echo "[$(date +"%X")]: $2" >> $logpath ;;
 	esac
 }
 
@@ -95,4 +104,8 @@ log_sys()
 if [ $# -eq "0" ] && tty -s
 then
 	__print_help
+	else
+		case $1 in
+			"-h"|"-help") __print_help
+			*) printmsg -
 fi
