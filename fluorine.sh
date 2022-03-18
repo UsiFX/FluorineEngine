@@ -53,7 +53,7 @@ __print_help()
 cat <<EOF
 FluorineEngine (c) 2022
 Usage:
-		-h, --help				print help menu and exit
+		-h, --help		-		print help menu and exit
 EOF
 }
 
@@ -107,5 +107,17 @@ then
 	else
 		case $1 in
 			"-h"|"-help") __print_help
-			*) printmsg -
+			*) printmsg -w "Unknown Argument: [ $1 ]"; __print_help ;;
+		esac
 fi
+
+#####################
+# Modes
+#####################
+
+energy()
+{
+	write "${kernel}/perf_cpu_time_max_percent" "0"
+	write "${kernel}/sched_energy_aware" "1"
+	write "${kernel}/sched_schedstats" "1"
+}
