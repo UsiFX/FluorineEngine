@@ -47,6 +47,7 @@ lpm="/sys/module/lpm_levels/"
 mmc="/sys/module/mmc_core/parameters/"
 blkio="/dev/blkio/"
 net="/proc/sys/net/"
+kgsl="/sys/class/kgsl/kgsl-3d0"
 
 __print_help()
 {
@@ -117,7 +118,28 @@ fi
 
 energy()
 {
-	write "${kernel}/perf_cpu_time_max_percent" "0"
-	write "${kernel}/sched_energy_aware" "1"
-	write "${kernel}/sched_schedstats" "1"
+	write "${kernel}perf_cpu_time_max_percent" "0"
+	write "${kernel}sched_energy_aware" "1"
+	write "${kernel}sched_schedstats" "1"
+	write "${kernel}sched_boost" "0"
+	write "${kernel}hung_task_timeout_secs" "0"
+	write "${kernel}printk_devkmsg" "off"
+	write "${kernel}sched_walt_cpu_high_irqload" "20000000"
+	write "${kernel}sched_walt_init_task_load_pct" "10"
+	write "${kernel}sched_tunable_scaling" "0"
+	# VM Tweaks
+	write "${vm}swap_ratio" "40"
+	write "${vm}drop_caches" "3"
+	write "${vm}swappiness" "100"
+	write "${vm}stat_interval" "10"
+	write "${vm}page-cluster" "0"
+	write "${vm}reap_mem_on_sigkill" "1"
+	write "${vm}block_dump" "0"
+	# GPU Tweaks
+	write "${kgsl}force_no_nap" "1"
+	write "${kgsl}bus_split" "0"
+	write "${kgsl}throttling" "0"
+	write "${kgsl}force_rail_on" "1"
+	write "${kgsl}force_bus_on" "1"
+	write "${kgsl}force_clk_on" "1"
 }
